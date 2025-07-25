@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+   
+    
     // Loader
     window.addEventListener('load', () => {
         const loader = document.querySelector('.loader');
@@ -76,15 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Smooth Scrolling
     document.querySelectorAll('.nav-links a, .footer-grid a, .hero-actions a').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = anchor.getAttribute('href');
-            if (targetId.startsWith('#')) {
-                document.querySelector(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
+        if (anchor.id !== 'download-cv') { // Skip the Download CV link
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = anchor.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
     });
 
     // Form Validation
@@ -113,5 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         alert('Form submitted successfully!');
+    });
+
+
+    const downloadCvLink = document.querySelector('#download-cv');
+    downloadCvLink.addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.href = 'assets/vishal_cv.pdf';
+        link.download = 'vishal_cv.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 });
