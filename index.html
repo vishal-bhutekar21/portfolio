@@ -3,9 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Portfolio of Vishal Bhutekar - Full Stack Developer specializing in web development and software solutions">
+    <meta name="keywords" content="full stack developer, web development, Vishal Bhutekar, LeetCode, Codeforces, open source">
+    <meta name="author" content="Vishal Bhutekar">
+    <meta property="og:title" content="Vishal Bhutekar - Portfolio">
+    <meta property="og:description" content="Explore the portfolio of Vishal Bhutekar, a Full Stack Developer passionate about creating innovative web solutions.">
+    <meta property="og:image" content="images/profile.webp">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <title>Vishal Bhutekar - Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="images/favicon.webp">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="images/profile.webp" as="image">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>this is first heading shree ganeshan</h1>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Header / Navigation -->
+    <header>
+        <nav class="nav">
+            <div class="nav-brand">Vishal Bhutekar</div>
+            <div class="nav-actions">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-up">
+            <div class="hero-text">
+                <h1>Hi, I'm <span class="highlight">Vishal Bhutekar</span></h1>
+                <div class="typing-text">I'm a 
+                    <span class="typed-text"></span>
+                    <span class="cursor"></span>
+                </div>
+                <p class="hero-tagline">Crafting innovative web solutions with passion</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary"><i class="fas fa-code"></i> View Projects</a>
+                    <a href="cv.pdf" class="btn-secondary" target="_blank" download><i class="fas fa-download"></i> Download CV</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/yourgithubhandle" target="_blank" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/yourlinkedinhandle" target="_blank" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://leetcode.com/yourleetcodehandle" target="_blank" aria-label="LeetCode Profile"><i class="fas fa-code"></i></a>
+                    <a href="https://codeforces.com/profile/yourcodeforceshandle" target="_blank" aria-label="Codeforces Profile"><i class="fas fa-laptop-code"></i></a>
+                    <a href="https://instagram.com/yourinstagramhandle" target="_blank" aria-label="Instagram Profile"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="zoom-in">
+                <img src="images/profile.webp" alt="Vishal Bhutekar profile picture" class="hero-img" loading="eager">
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2 data-aos="fade-up">Projects</h2>
+        <div class="project-grid">
+            <div class="project-card" data-aos="flip-up">
+                <img src="images/project1.jpg" alt="Project 1" loading="lazy">
+                <div class="project-info">
+                    <h3>Project Title 1</h3>
+                    <p>A brief description of the project and its tech stack.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank" class="btn-primary" aria-label="Live Demo of Project 1">Live Demo</a>
+                        <a href="#" target="_blank" class="btn-secondary" aria-label="Source Code of Project 1">View Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-aos="flip-up" data-aos-delay="50">
+                <img src="images/project2.jpg" alt="Project 2" loading="lazy">
+                <div class="project-info">
+                    <h3>Project Title 2</h3>
+                    <p>Overview of the project and technologies used.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank" class="btn-primary" aria-label="Live Demo of Project 2">Live Demo</a>
+                        <a href="#" target="_blank" class="btn-secondary" aria-label="Source Code of Project 2">View Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-aos="flip-up" data-aos-delay="100">
+                <img src="images/project3.jpg" alt="Portfolio Website" loading="lazy">
+                <div class="project-info">
+                    <h3>Portfolio Website</h3>
+                    <p>A responsive portfolio built with HTML, CSS, and JavaScript.</p>
+                    <div class="project-links">
+                        <a href="https://your-live-demo.com" target="_blank" class="btn-primary" aria-label="Live Demo of Portfolio Website">Live Demo</a>
+                        <a href="https://github.com/yourgithubhandle/portfolio" target="_blank" class="btn-secondary" aria-label="Source Code of Portfolio Website">View Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section">
+        <h2 data-aos="fade-up">Achievements</h2>
+        <div class="stats-container">
+            <div class="stat-item" data-aos="zoom-in">
+                <i class="fas fa-code"></i>
+                <h3><span class="counter">15</span>+</h3>
+                <p>Projects Completed</p>
+            </div>
+            <div class="stat-item" data-aos="zoom-in" data-aos-delay="50">
+                <i class="fas fa-award"></i>
+                <h3><span class="counter">5</span></h3>
+                <p>Certifications</p>
+            </div>
+            <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fas fa-users"></i>
+                <h3><span class="counter">10</span>+</h3>
+                <p>Happy Clients</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 data-aos="fade-up">About Me</h2>
+        <div class="about-content" data-aos="fade-right">
+            <img src="images/profile.webp" alt="Vishal Bhutekar" class="about-img" loading="lazy">
+            <div>
+                <p>I'm a 3rd-year B.Tech student passionate about web development and problem-solving. A fast learner and open-source enthusiast, I thrive on building impactful projects.</p>
+                <ul>
+                    <li><strong>Education:</strong> B.Tech in Computer Science, [Your University], Expected 2026</li>
+                    <li><strong>Location:</strong> [Your City], India</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <h2 data-aos="fade-up">Skills</h2>
+        <div class="skills-list" data-aos="zoom-in">
+            <div class="skill-item">HTML5</div>
+            <div class="skill-item">CSS3</div>
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">React</div>
+            <div class="skill-item">Git</div>
+            <div class="skill-item">Node.js</div>
+            <div class="skill-item">MongoDB</div>
+            <div class="skill-item">Express.js</div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <h2 data-aos="fade-up">Services</h2>
+        <div class="services-grid">
+            <div class="service-item" data-aos="flip-up">
+                <i class="fas fa-code"></i>
+                <h3>Web Development</h3>
+                <p>Creating responsive, user-friendly websites with modern frameworks.</p>
+            </div>
+            <div class="service-item" data-aos="flip-up" data-aos-delay="50">
+                <i class="fas fa-server"></i>
+                <h3>Backend Development</h3>
+                <p>Building scalable APIs and server-side solutions.</p>
+            </div>
+            <div class="service-item" data-aos="flip-up" data-aos-delay="100">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Problem Solving</h3>
+                <p>Optimizing algorithms for competitive programming and applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 data-aos="fade-up">Get in Touch</h2>
+        <div class="contact-links" data-aos="zoom-in">
+            <a href="mailto:youremail@example.com" aria-label="Email" class="contact-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://github.com/yourgithubhandle" target="_blank" aria-label="GitHub Profile" class="contact-icon">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/yourlinkedinhandle" target="_blank" aria-label="LinkedIn Profile" class="contact-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://leetcode.com/yourleetcodehandle" target="_blank" aria-label="LeetCode Profile" class="contact-icon">
+                <i class="fas fa-code"></i>
+            </a>
+            <a href="https://codeforces.com/profile/yourcodeforceshandle" target="_blank" aria-label="Codeforces Profile" class="contact-icon">
+                <i class="fas fa-laptop-code"></i>
+            </a>
+            <a href="https://instagram.com/yourinstagramhandle" target="_blank" aria-label="Instagram Profile" class="contact-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <form class="contact-form" action="https://formsubmit.co/your@email.com" method="POST" id="contactForm" data-aos="fade-up">
+            <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name">
+            <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+            <textarea name="message" placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+            <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="footer-social">
+                        <a href="https://github.com/yourgithubhandle" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/yourlinkedinhandle" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://leetcode.com/yourleetcodehandle" target="_blank" aria-label="LeetCode"><i class="fas fa-code"></i></a>
+                        <a href="https://codeforces.com/profile/yourcodeforceshandle" target="_blank" aria-label="Codeforces"><i class="fas fa-laptop-code"></i></a>
+                        <a href="https://instagram.com/yourinstagramhandle" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Vishal Bhutekar. Built with <i class="fas fa-heart"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="main.js"></script>
 </body>
 </html>
