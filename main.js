@@ -349,6 +349,150 @@ document.addEventListener('DOMContentLoaded', () => {
     footer.style.transform = 'translateY(20px)';
     footer.style.transition = 'all 0.5s ease';
     footerObserver.observe(footer);
+
+    // Handle certificate PDF viewing
+    document.querySelectorAll('.cert-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pdfUrl = button.getAttribute('href');
+            window.open(pdfUrl, '_blank');
+        });
+    });
+
+    // Open Image Modal function
+    function openImageModal(imgElement) {
+        const src = imgElement.getAttribute('data-src');
+        const alt = imgElement.getAttribute('data-alt');
+
+        const modal = document.createElement('div');
+        modal.classList.add('image-modal');
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+                <img src="${src}" alt="${alt}" class="modal-image">
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+
+        // Show modal with animation
+        requestAnimationFrame(() => {
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                modal.classList.add('show');
+            });
+        });
+
+        // Close modal handlers
+        const closeModal = () => {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+                document.body.style.overflow = '';
+            }, 300);
+        };
+
+        modal.querySelector('.modal-close').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        }, { once: true });
+    }
+
+    // Add touch support for mobile devices
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+
+    let xDown = null;
+    let yDown = null;
+
+    function handleTouchStart(evt) {
+        xDown = evt.touches[0].clientX;
+        yDown = evt.touches[0].clientY;
+    }
+
+    function handleTouchMove(evt) {
+        if (!xDown || !yDown) return;
+
+        const xUp = evt.touches[0].clientX;
+        const yUp = evt.touches[0].clientY;
+        const xDiff = xDown - xUp;
+        const yDiff = yDown - yUp;
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            const modal = document.querySelector('.image-modal');
+            if (modal && Math.abs(xDiff) > 50) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        xDown = null;
+        yDown = null;
+    }
+
+    // Open Certificate Modal function
+    function openCertificateModal(element) {
+        const img = element.querySelector('img');
+        const certificatePath = img.getAttribute('data-certificate');
+        const alt = img.getAttribute('alt');
+
+        if (certificatePath.endsWith('.pdf')) {
+            // For PDF certificates
+            const modal = document.createElement('div');
+            modal.classList.add('certificate-modal');
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close" aria-label="Close modal">&times;</button>
+                    <embed src="${certificatePath}" type="application/pdf" width="100%" height="100%">
+                    <div class="modal-fallback">
+                        <p>PDF cannot be displayed. <a href="${certificatePath}" target="_blank">Click here to view/download</a></p>
+                    </div>
+                </div>
+            `;
+        } else {
+            // For image certificates
+            const modal = document.createElement('div');
+            modal.classList.add('certificate-modal');
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close" aria-label="Close modal">&times;</button>
+                    <img src="${certificatePath}" alt="${alt}" class="modal-image">
+                </div>
+            `;
+        }
+
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+
+        // Show modal with animation
+        requestAnimationFrame(() => {
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                modal.classList.add('show');
+            });
+        });
+
+        // Close modal handlers
+        const closeModal = () => {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+            setTimeout(() => modal.remove(), 300);
+        };
+
+        modal.querySelector('.modal-close').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        }, { once: true });
+    }
 });
 
 /* Add to :root in style.css */
