@@ -28,22 +28,36 @@
 
 /* Add at the top of your CSS file */
 :root {
-    --container-width: 1200px;
-    --container-padding: 1.5rem;
-    --section-spacing: 4rem;
+    --container-width-xl: 1440px;
+    --container-width-lg: 1200px;
+    --container-width-md: 968px;
+    --container-width-sm: 768px;
+    --container-width-xs: 480px;
 }
 
 /* Global Responsive Container */
 .container {
-    width: 100%;
-    max-width: var(--container-width);
+    width: 90%;
+    max-width: var(--container-width-lg);
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: 0 1rem;
 }
 
 /* Section Spacing */
 .section {
-    padding: var(--section-spacing) 0;
+    padding: 5rem 0;
+}
+
+@media (max-width: 968px) {
+    .section {
+        padding: 4rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 3rem 0;
+    }
 }
 
 /* Responsive Typography */
@@ -246,18 +260,22 @@ header {
 }
 
 .nav {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: var(--bg);
+    z-index: 1000;
+    box-shadow: var(--shadow);
 }
 
 .nav-brand {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--primary-dark);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary);
 }
 
 .nav-actions {
@@ -266,58 +284,51 @@ header {
     gap: 1rem;
 }
 
-.theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    color: var(--primary-dark);
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: var(--transition);
-}
-
-.theme-toggle:hover {
-    color: var(--accent);
-    transform: scale(1.1);
-}
-
 .hamburger {
     display: none;
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: var(--primary-dark);
+    color: var(--text);
     cursor: pointer;
     padding: 0.5rem;
-    z-index: 1001;
 }
 
 .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.nav-links li a {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
-    padding: 0.5rem;
-    position: relative;
-}
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
 
-.nav-links li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: width 0.25s;
-}
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: var(--bg);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        gap: 1rem;
+    }
 
-.nav-links li a:hover::after, .nav-links li a:focus::after {
-    width: 100%;
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li a {
+        padding: 0.5rem 1rem;
+        display: block;
+    }
 }
 
 /* Hero Section */
@@ -1420,10 +1431,12 @@ header {
 .about-image-wrapper {
     position: relative;
     width: 100%;
-    max-height: 350px; /* Control maximum height */
+    max-width: 280px; /* Reduced from previous size */
+    height: 280px; /* Fixed height */
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
+    margin: 0 auto;
 }
 
 .about-image-wrapper img {
@@ -1602,5 +1615,188 @@ header {
     .skill-tag {
         padding: 0.3rem 0.6rem;
         font-size: 0.8rem;
+    }
+}
+
+/* Add these media query breakpoints */
+:root {
+    --container-width-xl: 1440px;
+    --container-width-lg: 1200px;
+    --container-width-md: 968px;
+    --container-width-sm: 768px;
+    --container-width-xs: 480px;
+}
+
+/* Base container styles */
+.container {
+    width: 90%;
+    max-width: var(--container-width-lg);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Responsive Grid Systems */
+.grid-container {
+    display: grid;
+    gap: 2rem;
+}
+
+@media (max-width: 1400px) {
+    .container {
+        max-width: var(--container-width-lg);
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: var(--container-width-md);
+    }
+    
+    .grid-container {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 968px) {
+    html {
+        font-size: 95%;
+    }
+    
+    .container {
+        max-width: var(--container-width-sm);
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 90%;
+    }
+    
+    .container {
+        width: 95%;
+        max-width: var(--container-width-xs);
+    }
+    
+    .grid-container {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 85%;
+    }
+    
+    .container {
+        width: 100%;
+        padding: 0 0.75rem;
+    }
+}
+
+/* Section Spacing */
+.section {
+    padding: 5rem 0;
+}
+
+@media (max-width: 968px) {
+    .section {
+        padding: 4rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 3rem 0;
+    }
+}
+
+/* Flexbox Utilities */
+.flex-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+/* Grid Utilities */
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 968px) {
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grid-4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-3, .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Responsive Images */
+.responsive-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Image aspect ratios */
+.aspect-square {
+    aspect-ratio: 1;
+}
+
+.aspect-video {
+    aspect-ratio: 16/9;
+}
+
+.aspect-portrait {
+    aspect-ratio: 3/4;
+}
+
+/* Modal improvements for mobile */
+.image-modal,
+.certificate-modal {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+            env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.modal-content {
+    width: min(90vw, 1200px);
+    margin: auto;
+    position: relative;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@supports (backdrop-filter: blur(10px)) {
+    .image-modal,
+    .certificate-modal {
+        backdrop-filter: blur(10px);
     }
 }

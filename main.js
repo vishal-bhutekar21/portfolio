@@ -48,19 +48,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     hamburger.addEventListener('click', () => {
         navLinks.classList.toggle('active');
-        const isExpanded = navLinks.classList.contains('active');
-        hamburger.setAttribute('aria-expanded', isExpanded);
-        hamburger.querySelector('i').classList.toggle('fa-bars');
-        hamburger.querySelector('i').classList.toggle('fa-times');
+        hamburger.setAttribute('aria-expanded', 
+            hamburger.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
+        );
     });
 
-    // Close mobile menu when clicking a link
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    // Close menu when clicking on a link
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
             hamburger.setAttribute('aria-expanded', 'false');
-            hamburger.querySelector('i').classList.add('fa-bars');
-            hamburger.querySelector('i').classList.remove('fa-times');
         });
     });
 
@@ -493,6 +498,42 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Escape') closeModal();
         }, { once: true });
     }
+
+    // Touch interaction handling
+    function handleTouchInteraction() {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        const minSwipeDistance = 50;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
+
+            const deltaX = touchStartX - touchEndX;
+            const deltaY = touchStartY - touchEndY;
+
+            // Only handle horizontal swipes that are more significant than vertical movement
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                const modal = document.querySelector('.image-modal, .certificate-modal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    setTimeout(() => modal.remove(), 300);
+                }
+            }
+        }, { passive: true });
+    }
+
+    // Initialize touch handling
+    handleTouchInteraction();
 });
 
 /* Add to :root in style.css */
