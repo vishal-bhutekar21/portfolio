@@ -124,51 +124,73 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Project Image Pop-up Modal
-    document.querySelectorAll('.project-card img').forEach(img => {
+    // Universal Image Pop-up Modal for all images
+    function makeImageClickable(img) {
+        img.style.cursor = 'pointer';
         img.addEventListener('click', () => {
-            const src = img.getAttribute('data-src');
-            const alt = img.getAttribute('data-alt');
+            const src = img.getAttribute('data-src') || img.src;
+            const alt = img.getAttribute('data-alt') || img.alt;
 
             // Create modal
             const modal = document.createElement('div');
             modal.classList.add('image-modal');
             modal.innerHTML = `
                 <div class="modal-content">
-                    <button class="modal-close" aria-label="Close modal">&times;</button>
+                    <button class="modal-close" aria-label="Close modal">
+                        <i class="fas fa-times"></i>
+                    </button>
                     <img src="${src}" alt="${alt}" class="modal-image">
+                    <div class="modal-info">
+                        <p>${alt}</p>
+                    </div>
                 </div>
             `;
             document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
 
-            // Show modal
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('show'), 10);
+            // Show modal with animation
+            requestAnimationFrame(() => {
+                modal.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    modal.classList.add('show');
+                });
+            });
+
+            // Close modal function
+            const closeModal = () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                setTimeout(() => modal.remove(), 300);
+            };
 
             // Close modal on button click
-            const closeButton = modal.querySelector('.modal-close');
-            closeButton.addEventListener('click', () => {
-                modal.classList.remove('show');
-                setTimeout(() => modal.remove(), 300);
-            });
+            modal.querySelector('.modal-close').addEventListener('click', closeModal);
 
             // Close modal on overlay click
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('show');
-                    setTimeout(() => modal.remove(), 300);
-                }
+                if (e.target === modal) closeModal();
             });
 
             // Close modal on Escape key
             document.addEventListener('keydown', function closeOnEscape(event) {
                 if (event.key === 'Escape') {
-                    modal.classList.remove('show');
-                    setTimeout(() => modal.remove(), 300);
+                    closeModal();
                     document.removeEventListener('keydown', closeOnEscape);
                 }
             });
         });
+    }
+
+    // Make all images clickable
+    document.querySelectorAll('img').forEach(img => {
+        // Skip navigation logos, icons, and very small images
+        if (!img.closest('.nav') && 
+            !img.closest('.social-links') && 
+            !img.hasAttribute('data-skip-modal') &&
+            img.naturalWidth > 100 && 
+            img.naturalHeight > 100) {
+            makeImageClickable(img);
+        }
     });
 
     // Form Validation
@@ -201,14 +223,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Download CV
     const downloadCvLink = document.querySelector('#download-cv');
-    downloadCvLink.addEventListener('click', () => {
-        const link = document.createElement('a');
-        link.href = 'assets/vishal_cv.pdf';
-        link.download = 'vishal_cv.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
+    if (downloadCvLink) {
+        downloadCvLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            try {
+                // Check if file exists first
+                fetch('assets/vishal_cv.pdf', { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            // Create a temporary link element
+                            const link = document.createElement('a');
+                            link.href = 'assets/vishal_cv.pdf';
+                            link.download = 'Vishal_Bhutekar_CV.pdf';
+                            link.target = '_blank';
+                            
+                            // Add to DOM, click, and remove
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
+                            // Show success message
+                            showNotification('CV download started!', 'success');
+                        } else {
+                            throw new Error('CV file not found');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Download failed:', error);
+                        // Fallback: Open PDF in new tab
+                        window.open('assets/vishal_cv.pdf', '_blank');
+                        showNotification('CV opened in new tab', 'success');
+                    });
+            } catch (error) {
+                console.error('Download failed:', error);
+                // Final fallback: Direct link
+                window.open('assets/vishal_cv.pdf', '_blank');
+                showNotification('CV opened in new tab', 'success');
+            }
+        });
+    }
+    
+    // Notification function (if not already defined)
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? 'var(--success)' : 'var(--error)'};
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        `;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            ${message}
+        `;
+
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
 
     // Counter Animation
     function animateCounter(element, target) {

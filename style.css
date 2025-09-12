@@ -1,51 +1,85 @@
 /* Root Variables for Light and Dark Modes */
 :root {
-    --primary: #3461c1;
-    --primary-dark: #273972;
-    --accent: #ffd700;
-    --bg: #f9fafb;
+    /* Modern Refreshing Colors */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #8b5cf6;
+    --accent: #06d6a0;
+    --accent-dark: #059669;
+    --secondary: #f59e0b;
+    --secondary-dark: #d97706;
+    --bg: #fafbfc;
     --section-bg: #ffffff;
-    --text: #1a1a1a;
-    --text-muted: #4b5563;
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
     --border: #e5e7eb;
+    --border-light: #f3f4f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    
+    /* Effects */
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --radius: 10px;
-    --transition: all 0.3s ease;
-     --primary-rgb: 52, 97, 193; 
-}
-
-[data-theme="dark"] {
-    --primary: #60a5fa;
-    --primary-dark: #3b82f6;
-    --accent: #facc15;
-    --bg: #111827;
-    --section-bg: #1f2a44;
-    --text: #e5e7eb;
-    --text-muted: #9ca3af;
-    --border: #374151;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Add at the top of your CSS file */
-:root {
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
+    
+    /* Layout */
     --container-width-xl: 1440px;
     --container-width-lg: 1200px;
     --container-width-md: 968px;
     --container-width-sm: 768px;
     --container-width-xs: 480px;
+    
+    /* RGB Values for transparency */
+    --primary-rgb: 99, 102, 241;
+    --accent-rgb: 6, 214, 160;
+    --secondary-rgb: 245, 158, 11;
+    --text-rgb: 31, 41, 55;
 }
+
+[data-theme="dark"] {
+    --primary: #8b5cf6;
+    --primary-dark: #7c3aed;
+    --primary-light: #a78bfa;
+    --accent: #10b981;
+    --accent-dark: #059669;
+    --secondary: #fbbf24;
+    --secondary-dark: #f59e0b;
+    --bg: #0f0f23;
+    --section-bg: #1a1a2e;
+    --text: #f8fafc;
+    --text-muted: #cbd5e1;
+    --text-light: #94a3b8;
+    --border: #334155;
+    --border-light: #475569;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+    
+    --primary-rgb: 139, 92, 246;
+    --accent-rgb: 16, 185, 129;
+    --secondary-rgb: 251, 191, 36;
+    --text-rgb: 248, 250, 252;
+}
+
 
 /* Global Responsive Container */
 .container {
-    width: 90%;
-    max-width: var(--container-width-lg);
+    width: min(90%, var(--container-width-lg));
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 clamp(1rem, 4vw, 2rem);
 }
 
 /* Section Spacing */
 .section {
-    padding: 5rem 0;
+    padding: clamp(3rem, 8vw, 6rem) 0;
+    position: relative;
 }
 
 @media (max-width: 968px) {
@@ -184,12 +218,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Reusable Containers */
-.section {
-    padding: 4rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
 h1, h2, h3, h4 {
     font-family: 'Poppins', 'Inter', sans-serif;
@@ -214,7 +242,7 @@ ul, li { list-style: none; }
 
 /* Button Styles */
 .btn-primary, .btn-secondary {
-    padding: 0.75rem 1.5rem;
+    padding: 0.875rem 2rem;
     font-size: 0.95rem;
     border-radius: var(--radius);
     border: none;
@@ -224,29 +252,67 @@ ul, li { list-style: none; }
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: #fff;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-    background: var(--primary-dark);
-    color: var(--accent);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(var(--primary-rgb), 0.4);
 }
 
 .btn-secondary {
     background: transparent;
     color: var(--primary);
     border: 2px solid var(--primary);
+    position: relative;
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.btn-secondary:hover::before {
+    width: 100%;
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    background: var(--primary);
     color: #fff;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(var(--primary-rgb), 0.3);
 }
 
 /* Navigation Styles */
@@ -263,13 +329,16 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem clamp(1rem, 4vw, 2rem);
     position: fixed;
     width: 100%;
     top: 0;
-    background: var(--bg);
+    background: rgba(var(--section-bg), 0.95);
+    backdrop-filter: blur(15px);
     z-index: 1000;
     box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
 }
 
 .nav-brand {
@@ -282,6 +351,41 @@ header {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.theme-toggle {
+    background: rgba(var(--primary-rgb), 0.1);
+    border: none;
+    font-size: 1.2rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.75rem;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.theme-toggle:hover::before {
+    left: 100%;
 }
 
 .hamburger {
@@ -334,10 +438,26 @@ header {
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, var(--section-bg) 0%, var(--bg) 100%);
-    min-height: 70vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 3rem 1rem;
+    padding: clamp(2rem, 5vw, 4rem) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(var(--primary-rgb), 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(var(--accent-rgb), 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(var(--secondary-rgb), 0.08) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .hero-content {
@@ -346,6 +466,8 @@ header {
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-text {
@@ -367,10 +489,17 @@ header {
 }
 
 .hero h2 span {
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
     color: var(--primary-dark);
     padding: 0.1em 0.3em;
     border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3); }
+    to { box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.5); }
 }
 
 .hero-tagline {
@@ -1263,21 +1392,22 @@ header {
     }
 }
 
-/* Modal Styles */
+/* Enhanced Modal Styles */
 .image-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 1100;
     opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 1rem;
+    transition: opacity 0.4s ease;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
 }
 
 .image-modal.show {
@@ -1286,35 +1416,69 @@ header {
 
 .modal-content {
     position: relative;
-    max-width: min(90%, 1200px);
+    max-width: min(95%, 1400px);
     max-height: 90vh;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .modal-image {
     max-width: 100%;
-    max-height: 85vh;
+    max-height: 80vh;
     object-fit: contain;
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     display: block;
-    margin: 0 auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.modal-image:hover {
+    transform: scale(1.02);
 }
 
 .modal-close {
     position: absolute;
-    top: -40px;
+    top: -50px;
     right: 0;
-    background: none;
+    background: rgba(var(--primary-rgb), 0.9);
     border: none;
     color: #fff;
-    font-size: 2rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 0.5rem;
-    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    backdrop-filter: blur(10px);
 }
 
 .modal-close:hover {
-    transform: scale(1.1);
+    background: var(--primary);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4);
+}
+
+.modal-info {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+.modal-info p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
 }
 
 @media screen and (max-width: 768px) {
