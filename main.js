@@ -221,47 +221,34 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Form submitted successfully!');
     });
 
-    // Download CV
+    // Download CV - Simplified and Direct Approach
     const downloadCvLink = document.querySelector('#download-cv');
     if (downloadCvLink) {
+        console.log('Download CV button found and event listener attached');
         downloadCvLink.addEventListener('click', (e) => {
             e.preventDefault();
+            console.log('Download CV button clicked');
             
-            try {
-                // Check if file exists first
-                fetch('assets/vishal_cv.pdf', { method: 'HEAD' })
-                    .then(response => {
-                        if (response.ok) {
-                            // Create a temporary link element
-                            const link = document.createElement('a');
-                            link.href = 'assets/vishal_cv.pdf';
-                            link.download = 'Vishal_Bhutekar_CV.pdf';
-                            link.target = '_blank';
-                            
-                            // Add to DOM, click, and remove
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                            
-                            // Show success message
-                            showNotification('CV download started!', 'success');
-                        } else {
-                            throw new Error('CV file not found');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Download failed:', error);
-                        // Fallback: Open PDF in new tab
-                        window.open('assets/vishal_cv.pdf', '_blank');
-                        showNotification('CV opened in new tab', 'success');
-                    });
-            } catch (error) {
-                console.error('Download failed:', error);
-                // Final fallback: Direct link
-                window.open('assets/vishal_cv.pdf', '_blank');
-                showNotification('CV opened in new tab', 'success');
+            // Direct download approach
+            const link = document.createElement('a');
+            link.href = 'assets/vishal_cv.pdf';
+            link.download = 'Vishal_Bhutekar_CV.pdf';
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
+            console.log('Triggering download...');
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show notification
+            if (typeof showNotification === 'function') {
+                showNotification('CV download started!', 'success');
+            } else {
+                console.log('CV download initiated');
             }
         });
+    } else {
+        console.error('Download CV button not found!');
     }
     
     // Notification function (if not already defined)
