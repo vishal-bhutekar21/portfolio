@@ -1987,6 +1987,332 @@ header {
     }
 }
 
+/* Beyond Code Section */
+#beyond-code {
+    background: linear-gradient(135deg, var(--section-bg) 0%, var(--bg) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#beyond-code::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.1), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.beyond-code-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.beyond-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+}
+
+.interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Instagram Feature Card */
+.instagram-feature-card {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    color: #fff;
+    box-shadow: 0 10px 40px rgba(131, 58, 180, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.instagram-feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+    animation: float 8s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-30px, -30px); }
+}
+
+.instagram-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(131, 58, 180, 0.4);
+}
+
+.instagram-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.instagram-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    transition: var(--transition);
+}
+
+.instagram-feature-card:hover .instagram-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.instagram-info h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.instagram-handle {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.instagram-handle:hover {
+    color: #fff;
+    gap: 0.7rem;
+}
+
+.instagram-description {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.instagram-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: #fff;
+    color: #833AB4;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.instagram-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    gap: 1rem;
+}
+
+/* Interest Cards */
+.interest-card {
+    background: var(--section-bg);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.interest-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.interest-card:hover::before {
+    transform: scaleX(1);
+}
+
+.interest-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.interest-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--accent-rgb), 0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
+
+.interest-card:hover .interest-icon {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    transform: scale(1.1) rotate(10deg);
+}
+
+.interest-icon i {
+    font-size: 1.8rem;
+    color: var(--primary);
+    transition: var(--transition);
+}
+
+.interest-card:hover .interest-icon i {
+    color: #fff;
+}
+
+.interest-card h3 {
+    color: var(--text);
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.interest-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive Design for Beyond Code */
+@media screen and (max-width: 968px) {
+    .instagram-feature-card {
+        grid-column: span 1;
+        padding: 2rem;
+    }
+
+    .instagram-header {
+        gap: 1rem;
+    }
+
+    .instagram-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .instagram-info h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .beyond-intro {
+        margin-bottom: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .interests-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .instagram-feature-card {
+        padding: 1.5rem;
+    }
+
+    .instagram-cta {
+        padding: 0.875rem 1.75rem;
+        font-size: 0.95rem;
+    }
+
+    .interest-card {
+        padding: 1.5rem;
+    }
+
+    .interest-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .interest-icon i {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .interests-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .instagram-feature-card {
+        padding: 1.25rem;
+    }
+
+    .instagram-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .instagram-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .instagram-description {
+        font-size: 1rem;
+    }
+
+    .instagram-cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .interest-card {
+        padding: 1.25rem;
+        text-align: center;
+    }
+
+    .interest-icon {
+        margin: 0 auto 1.25rem;
+    }
+}
+
 /* About Section Styles */
 #about {
     background: var(--bg);
