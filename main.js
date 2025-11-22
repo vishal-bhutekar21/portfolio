@@ -35,29 +35,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Typed.js for Hero Section
     new Typed('.typed-text', {
-        strings: ['Full Stack Developer', 'Web Developer', 'Problem Solver'],
+        strings: ['Android Developer', 'Problem Solver', 'Tech Enthusiast', 'Code Craftsman'],
         typeSpeed: 50,
         backSpeed: 30,
         backDelay: 2000,
         loop: true
     });
 
-    // Hamburger Menu
+    // Hamburger Menu - Enhanced for mobile
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('.nav');
     
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburger.setAttribute('aria-expanded', 
-            hamburger.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
-        );
+    // Toggle menu
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = navLinks.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', isActive);
+        
+        // Change hamburger icon
+        const icon = hamburger.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+        
+        // Prevent body scroll when menu is open
+        body.style.overflow = isActive ? 'hidden' : '';
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
             hamburger.setAttribute('aria-expanded', 'false');
+            body.style.overflow = '';
+            
+            const icon = hamburger.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
         }
     });
 
@@ -66,38 +84,45 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
             hamburger.setAttribute('aria-expanded', 'false');
+            body.style.overflow = '';
+            
+            const icon = hamburger.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
         });
     });
 
-    // Improved mobile menu handling
-    function handleMobileMenu() {
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        const body = document.body;
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav') && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                body.style.overflow = '';
+    // Close menu on window resize to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            body.style.overflow = '';
+            
+            const icon = hamburger.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
             }
-        });
+        }
+    });
 
-        // Close menu on window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                body.style.overflow = '';
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            body.style.overflow = '';
+            
+            const icon = hamburger.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
             }
-        });
-    }
-
-    handleMobileMenu();
+        }
+    });
 
     // Scroll to Top
     const scrollToTop = document.querySelector('#scrollToTop');
@@ -161,6 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.classList.remove('show');
                 document.body.style.overflow = '';
                 setTimeout(() => modal.remove(), 300);
+                // Return focus to the image that opened the modal
+                img.focus();
             };
 
             // Close modal on button click
@@ -172,12 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Close modal on Escape key
-            document.addEventListener('keydown', function closeOnEscape(event) {
+            const handleKeyDown = (event) => {
                 if (event.key === 'Escape') {
                     closeModal();
-                    document.removeEventListener('keydown', closeOnEscape);
+                    document.removeEventListener('keydown', handleKeyDown);
                 }
-            });
+            };
+            document.addEventListener('keydown', handleKeyDown);
         });
     }
 
@@ -192,6 +220,26 @@ document.addEventListener('DOMContentLoaded', () => {
             makeImageClickable(img);
         }
     });
+
+    // Lazy loading for images
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src && img.src !== img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
 
     // Form Validation
     const form = document.querySelector('#contactForm');

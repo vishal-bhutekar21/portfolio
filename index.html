@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Portfolio of Vishal Rajesh Bhutekar - Computer Science student at Government College of Engineering, Aurangabad specializing in Android development">
-    <meta name="keywords" content="Android development, web development, Vishal Rajesh Bhutekar, LeetCode, Codeforces, open source">
+    <meta name="description" content="Portfolio of Vishal Rajesh Bhutekar - Android Developer and Computer Science student at Government College of Engineering, Chhatrapati Sambhajinagar. Specialized in native Android app development with Java/Kotlin.">
+    <meta name="keywords" content="Android Developer, Java, Kotlin, Mobile App Development, Vishal Bhutekar, LeetCode, Codeforces, Firebase, Android Studio, Competitive Programming">
     <meta name="author" content="Vishal Rajesh Bhutekar">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="Vishal Bhutekar - Portfolio">
     <meta property="og:description" content="Explore the portfolio of Vishal Rajesh Bhutekar, an Android Developer passionate about creating innovative applications. Contact: vishalbhutekar33772@gmail.com">
     <meta property="og:image" content="images/profile.jpg">
@@ -16,7 +18,9 @@
     <link rel="icon" type="image/webp" href="images/favicon.webp">
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="images/profile.webp" as="image">
+    <link rel="preload" href="images/profile-new.png" as="image">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="main.js" as="script">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -137,7 +141,7 @@
             </div>
         </div>
         <div class="project-card" data-aos="flip-up" data-aos-delay="150">
-            <img src="images/gecaresults.jpg" alt="Geca Results" loading="lazy" data-src="images/gecaresults.jpg" data-alt="Geca Results" class="project-image" onclick="openImageModal(this)">
+            <img src="images/gecaresults.png" alt="Geca Results" loading="lazy" data-src="images/gecaresults.png" data-alt="Geca Results" class="project-image" onclick="openImageModal(this)">
             <div class="project-info">
                 <h3>Geca Results</h3>
                 <p>An app for college students to view results, generate marksheets, calculate CGPA, and download hall tickets in PDF format. Built with Java for backend logic, XML for data representation, and PDF document class for generating downloadable PDFs. Fetches student data from an Excel file based on enrollment numbers for accurate and organized output.</p>
@@ -148,7 +152,7 @@
             </div>
         </div>
         <div class="project-card" data-aos="flip-up" data-aos-delay="200">
-            <img src="images/fittrack.jpg" alt="Shetkari Mitra – Snakebite Safety & Help App" loading="lazy" data-src="images/fittrack.jpg" data-alt="Shetkari Mitra – Snakebite Safety & Help App" class="project-image" onclick="openImageModal(this)">
+            <img src="images/shetkarimitra.jpg" alt="Shetkari Mitra – Snakebite Safety & Help App" loading="lazy" data-src="images/shetkarimitra.jpg" data-alt="Shetkari Mitra – Snakebite Safety & Help App" class="project-image" onclick="openImageModal(this)">
             <div class="project-info">
                 <h3>Shetkari Mitra – Snakebite Safety & Help App</h3>
                 <p>A farmer-focused Android app that provides snakebite first-aid, nearby hospital tracking, snake identification, and connects users with local rescuers.
@@ -225,7 +229,7 @@
     <h2 data-aos="fade-up">About Me</h2>
     <div class="about-container" data-aos="fade-up">
         <div class="about-image-wrapper">
-            <img src="images/picofme.png" alt="Vishal Rajesh Bhutekar" loading="lazy">
+            <img src="images/picofme.jpg" alt="Vishal Rajesh Bhutekar" loading="lazy">
         </div>
         <div class="about-content">
             <div class="about-text">
@@ -263,10 +267,50 @@
 
     <!-- Experience Section -->
     <section id="experience" class="section">
-        <h2 data-aos="fade-up">Experience</h2>
+        <h2 data-aos="fade-up">Professional Experience</h2>
         <div class="experience-timeline">
-            <!-- Current Role -->
-            <div class="experience-card" data-aos="fade-up">
+            <!-- Current Internship -->
+            <div class="experience-card current" data-aos="fade-up">
+                <div class="experience-badge">Current</div>
+                <div class="experience-header">
+                    <div class="company-logo">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="experience-title">
+                        <h3>Android Mobile Application Development Intern</h3>
+                        <p class="company">Aquila Events · Internship</p>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> Remote</p>
+                        <a href="https://www.aquilaevents.in/" target="_blank" rel="noopener noreferrer" class="company-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+                <div class="experience-content">
+                    <p class="duration"><i class="fas fa-calendar"></i> Nov 2025 - Present</p>
+                    <div class="role-description">
+                        <p>Developing a comprehensive event-handling mobile application using modern Android development practices and clean architecture patterns.</p>
+                    </div>
+                    <ul class="responsibilities">
+                        <li><strong>Architecture:</strong> Implementing MVVM (Model-View-ViewModel) architecture for maintainable and scalable code</li>
+                        <li><strong>UI/UX Development:</strong> Building user-friendly features with clean UI components and ensuring smooth navigation</li>
+                        <li><strong>Cloud Integration:</strong> Integrating AWS services for backend operations, API handling, and cloud-based functionalities</li>
+                        <li><strong>Database Management:</strong> Managing database operations for secure data storage, real-time updates, and efficient data flow</li>
+                        <li><strong>Platform Development:</strong> Contributing to a reliable and scalable event management platform</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Android</span>
+                        <span class="tech-tag">Kotlin/Java</span>
+                        <span class="tech-tag">MVVM</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">REST API</span>
+                        <span class="tech-tag">Firebase</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C-CuBe Role -->
+            <!-- C-CuBe Role -->
+            <div class="experience-card" data-aos="fade-up" data-aos-delay="50">
                 <div class="experience-header">
                     <div class="company-logo">
                         <i class="fas fa-cube"></i>
@@ -277,10 +321,10 @@
                         <p class="location"><i class="fas fa-map-marker-alt"></i> Chhatrapati Sambhajinagar, Maharashtra</p>
                     </div>
                 </div>
-                <div class="experience-roles">
+                <div class="experience-content">
                     <div class="role">
                         <h4>Android Coach</h4>
-                        <p class="duration">Apr 2025 - Present · 4 mos</p>
+                        <p class="duration"><i class="fas fa-calendar"></i> Apr 2025 - Present · 8 mos</p>
                         <ul class="responsibilities">
                             <li>Mentoring and guiding students in Android development</li>
                             <li>Conducting workshops and training sessions</li>
@@ -289,7 +333,7 @@
                     </div>
                     <div class="role">
                         <h4>Member for Android Development</h4>
-                        <p class="duration">Sep 2024 - Apr 2025 · 8 mos</p>
+                        <p class="duration"><i class="fas fa-calendar"></i> Sep 2024 - Apr 2025 · 8 mos</p>
                     </div>
                 </div>
             </div>
@@ -301,19 +345,25 @@
                         <i class="fas fa-building"></i>
                     </div>
                     <div class="experience-title">
-                        <h3>Spring Boot Internship</h3>
+                        <h3>Spring Boot Development Intern</h3>
                         <p class="company">Codeft Technology Pvt Ltd · Internship</p>
                         <p class="location"><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra, India · On-site</p>
                     </div>
                 </div>
                 <div class="experience-content">
-                    <p class="duration">Jun 2023 - Jul 2023 · 2 mos</p>
+                    <p class="duration"><i class="fas fa-calendar"></i> Jun 2023 - Jul 2023 · 2 mos</p>
                     <ul class="responsibilities">
                         <li>Worked on E-Patsantha Project using Spring Boot technology</li>
                         <li>Created back-end systems and managed data flow</li>
                         <li>Collaborated with team members to deliver quality solutions</li>
                         <li>Gained practical experience in professional project development</li>
                     </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">REST API</span>
+                        <span class="tech-tag">Backend</span>
+                    </div>
                 </div>
             </div>
         </div>
