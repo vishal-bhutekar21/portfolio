@@ -1,0 +1,126 @@
+OmniStore Logistics – API Documentation
+
+
+
+1 Retrieve Assigned Delivery
+
+GET /couriers/{courierId}/deliveries
+
+Example Request
+
+GET https://api.vishal.store.com/api/v1/couriers/102/deliveries
+
+Example Response
+
+
+{
+  "courierId": "02",
+  "deliveries": [
+    {
+      "shipmentId": "1001",
+      "customerName": "vishal bhutekar",
+      "deliveryAddress": "Aurangabad, Maharashtra",
+      "priority": "low",
+      "status": "Out for Delivery"
+    },
+    {
+      "shipmentId": "1002",
+      "customerName": "vishal deshmukh",
+      "deliveryAddress": "Pune, Maharashtra",
+      "priority": "Medium",
+      "status": "Pending"
+    }
+  ]
+}
+
+
+ Error Codes
+                    
+
+400   Invalid request parameters        
+401   Unauthorized request 
+404   Courier not found      
+
+              
+--------------------------------------------------------------------------------------------------------------------------
+
+2 Update Delivery Status
+
+Endpoint
+
+
+PUT /deliveries/{shipmentId}/status
+
+
+Headers
+
+
+ Request Body
+
+
+{
+  "status": "Delivered",
+  "location": "Aurangabad Warehouse",
+  "timestamp": "2026-03-17T14:30:00"
+}
+
+ Response
+{
+  "message": "Delivery status updated successfully",
+  "shipmentId": "1001",
+  "updatedStatus": "Delivered"
+}
+
+
+Error Codes
+
+
+400   Invalid request data
+401   Unauthorized access 
+404   Shipment not found   
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3 Log Delivery Exception
+
+Endpoint
+
+
+POST /deliveries/{shipmentId}/exceptions
+
+ Headers
+
+
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+
+ Request Body
+
+{
+  "reason": "Customer Not Home",
+  "photoUrl": "https://storage.vishal.com/exceptions/photo123.jpg",
+  "remarks": "Customer requested delivery tomorrow"
+}
+
+
+ Response
+
+{
+  "message": "Delivery exception logged successfully",
+  "shipmentId": "1001"
+}
+
+ Error Codes
+
+ 400   Invalid exception data 
+ 401   Unauthorized request   
+ 404   Shipment not found   
+  
+ Standard HTTP Error Codes
+
+| 200  | Request successful    |
+| 400  | Bad request           |
+| 401  | Unauthorized          |
+| 404  | Resource not found    |
+| 500  | Internal server error |
