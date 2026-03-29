@@ -206,45 +206,8 @@
     <!-- Brief description -->
     <p>All files from the India Skills competition are listed below. Click <strong style="color:#e2e8f0;">Download</strong> next to any file to save it to your device.</p>
 
-    <!-- ===== File List ===== -->
-    <div class="file-list">
-
-      <!-- File 1: ApiDocPart.txt -->
-      <div class="file-row">
-        <span class="file-icon" aria-hidden="true">📄</span>
-        <div class="file-details">
-          <div class="file-name">ApiDocPart.txt</div>
-          <div class="file-meta">Text Document</div>
-        </div>
-        <a
-          href="/india-skills-download/ApiDocPart.txt"
-          download="ApiDocPart.txt"
-          class="btn-download"
-          aria-label="Download ApiDocPart.txt"
-        >
-          ⬇️ Download
-        </a>
-      </div>
-
-      <!-- File 2: WinformsPart.txt -->
-      <div class="file-row">
-        <span class="file-icon" aria-hidden="true">📄</span>
-        <div class="file-details">
-          <div class="file-name">WinformsPart.txt</div>
-          <div class="file-meta">Text Document</div>
-        </div>
-        <a
-          href="/india-skills-download/WinformsPart.txt"
-          download="WinformsPart.txt"
-          class="btn-download"
-          aria-label="Download WinformsPart.txt"
-        >
-          ⬇️ Download
-        </a>
-      </div>
-
-    </div>
-    <!-- end .file-list -->
+    <!-- ===== File List (populated by JavaScript below) ===== -->
+    <div class="file-list" id="file-list"></div>
 
     <!-- Link back to the main portfolio page -->
     <p class="back-link">
@@ -257,6 +220,86 @@
   <p class="footer-note">
     Vishal Bhutekar &nbsp;|&nbsp; Portfolio
   </p>
+
+  <script>
+    /**
+     * India Skills file list.
+     * To add a new file, simply append an object to this array:
+     *   { name: "FileName.ext", size: "X KB" }
+     * The icon and file type label are determined automatically from the extension.
+     */
+    var FILES = [
+      { name: "ApiDocPart.txt",                   size: "14 KB"  },
+      { name: "WinformsPart.txt",                 size: "24 KB"  },
+      { name: "Session_01_Vishal_Bhutekar.zip",   size: "4.1 MB" }
+    ];
+
+    /** HTML-escapes a string to prevent XSS when injecting into innerHTML. */
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    /** Returns an emoji icon and a human-readable label for a given filename. */
+    function fileTypeInfo(filename) {
+      var ext = filename.split('.').pop().toLowerCase();
+      var map = {
+        txt:  { icon: "📄", label: "Text Document" },
+        pdf:  { icon: "📕", label: "PDF Document"  },
+        zip:  { icon: "🗜️", label: "ZIP Archive"   },
+        rar:  { icon: "🗜️", label: "RAR Archive"   },
+        "7z": { icon: "🗜️", label: "7-Zip Archive" },
+        doc:  { icon: "📝", label: "Word Document"  },
+        docx: { icon: "📝", label: "Word Document"  },
+        xls:  { icon: "📊", label: "Excel Spreadsheet" },
+        xlsx: { icon: "📊", label: "Excel Spreadsheet" },
+        ppt:  { icon: "📽️", label: "PowerPoint Presentation" },
+        pptx: { icon: "📽️", label: "PowerPoint Presentation" },
+        png:  { icon: "🖼️", label: "PNG Image"     },
+        jpg:  { icon: "🖼️", label: "JPEG Image"    },
+        jpeg: { icon: "🖼️", label: "JPEG Image"    },
+        gif:  { icon: "🖼️", label: "GIF Image"     },
+        mp4:  { icon: "🎬", label: "MP4 Video"     },
+        mp3:  { icon: "🎵", label: "MP3 Audio"     },
+        json: { icon: "📄", label: "JSON File"     },
+        xml:  { icon: "📄", label: "XML File"      },
+        csv:  { icon: "📊", label: "CSV File"      }
+      };
+      return map[ext] || { icon: "📎", label: ext.toUpperCase() + " File" };
+    }
+
+    /** Renders all file rows into #file-list. */
+    function renderFileList() {
+      var container = document.getElementById('file-list');
+      FILES.forEach(function(file) {
+        var info = fileTypeInfo(file.name);
+        var meta = info.label + (file.size ? " · " + file.size : "");
+
+        var row = document.createElement('div');
+        row.className = 'file-row';
+        row.innerHTML =
+          '<span class="file-icon" aria-hidden="true">' + info.icon + '</span>' +
+          '<div class="file-details">' +
+            '<div class="file-name">' + esc(file.name) + '</div>' +
+            '<div class="file-meta">' + esc(meta) + '</div>' +
+          '</div>' +
+          '<a href="/india-skills-download/' + encodeURIComponent(file.name) + '"' +
+             ' download="' + esc(file.name) + '"' +
+             ' class="btn-download"' +
+             ' aria-label="Download ' + esc(file.name) + '">' +
+            '⬇️ Download' +
+          '</a>';
+
+        container.appendChild(row);
+      });
+    }
+
+    renderFileList();
+  </script>
 
 </body>
 </html>
