@@ -17,7 +17,7 @@
       padding: 0;
     }
 
-    /* Dark background as specified (#0f172a) */
+    /* Dark background */
     body {
       min-height: 100vh;
       background-color: #0f172a;
@@ -31,13 +31,12 @@
     }
 
     /* ===== Card Container ===== */
-    /* Centered card-style box with subtle border and shadow */
     .card {
-      background-color: #1e293b;   /* slightly lighter dark for contrast */
+      background-color: #1e293b;
       border: 1px solid #334155;
       border-radius: 16px;
       padding: 2.5rem 2rem;
-      max-width: 480px;
+      max-width: 540px;
       width: 100%;
       text-align: center;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -65,16 +64,24 @@
     }
 
     /* Sub-heading / description */
-    .card p {
+    .card > p {
       font-size: 0.95rem;
       color: #94a3b8;
       margin-bottom: 1.75rem;
       line-height: 1.6;
     }
 
-    /* ===== File Info Box ===== */
-    /* Shows the file name in a highlighted box */
-    .file-info {
+    /* ===== File List ===== */
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ===== File Row ===== */
+    /* Each row shows file info on the left and a download button on the right */
+    .file-row {
       background-color: #0f172a;
       border: 1px solid #334155;
       border-radius: 10px;
@@ -82,52 +89,52 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 1.75rem;
       text-align: left;
     }
 
     /* File icon */
-    .file-info .file-icon {
+    .file-row .file-icon {
       font-size: 1.5rem;
       flex-shrink: 0;
     }
 
+    /* File name & meta info takes up remaining space */
+    .file-row .file-details {
+      flex: 1;
+      min-width: 0;
+    }
+
     /* File name text */
-    .file-info .file-name {
+    .file-row .file-name {
       font-size: 0.95rem;
       font-weight: 600;
       color: #e2e8f0;
       word-break: break-all;
     }
 
-    /* File size / type hint */
-    .file-info .file-meta {
+    /* File type hint */
+    .file-row .file-meta {
       font-size: 0.78rem;
       color: #64748b;
       margin-top: 2px;
     }
 
     /* ===== Download Button ===== */
-    /*
-      Anchor tag styled as a button.
-      Uses the `download` attribute so the browser triggers
-      a file download instead of navigating to the file.
-      No JavaScript or backend needed — pure HTML.
-    */
     .btn-download {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      background-color: #22c55e;   /* green as specified */
+      gap: 0.4rem;
+      background-color: #22c55e;
       color: #fff;
       font-family: 'Inter', sans-serif;
-      font-size: 1rem;
+      font-size: 0.875rem;
       font-weight: 600;
       text-decoration: none;
-      border-radius: 10px;          /* rounded corners */
-      padding: 0.75rem 2rem;
-      width: 100%;
+      border-radius: 8px;
+      padding: 0.55rem 1.1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: background-color 0.2s ease, transform 0.1s ease;
       cursor: pointer;
     }
@@ -165,15 +172,22 @@
     }
 
     /* ===== Mobile Responsiveness ===== */
-    /* Already handled by max-width + padding on .card,
-       but add an extra tweak for very small screens */
-    @media (max-width: 400px) {
+    @media (max-width: 480px) {
       .card {
         padding: 2rem 1.25rem;
       }
 
       .card h1 {
         font-size: 1.25rem;
+      }
+
+      .file-row {
+        flex-wrap: wrap;
+      }
+
+      .btn-download {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -183,42 +197,54 @@
   <!-- ===== Main Download Card ===== -->
   <div class="card">
 
-    <!-- Archive / zip icon at the top -->
+    <!-- Archive icon at the top -->
     <div class="icon-wrapper" aria-hidden="true">📦</div>
 
     <!-- Page title -->
-    <h1>India Skills Download</h1>
+    <h1>India Skills Downloads</h1>
 
     <!-- Brief description -->
-    <p>Click the button below to download the file associated with the India Skills competition.</p>
+    <p>All files from the India Skills competition are listed below. Click <strong style="color:#e2e8f0;">Download</strong> next to any file to save it to your device.</p>
 
-    <!-- File info box — shows the file name clearly -->
-    <div class="file-info">
-      <span class="file-icon" aria-hidden="true">🗜️</span>
-      <div>
-        <!-- File name displayed to the user -->
-        <div class="file-name">sample.zip</div>
-        <div class="file-meta">ZIP Archive</div>
+    <!-- ===== File List ===== -->
+    <div class="file-list">
+
+      <!-- File 1: ApiDocPart.txt -->
+      <div class="file-row">
+        <span class="file-icon" aria-hidden="true">📄</span>
+        <div class="file-details">
+          <div class="file-name">ApiDocPart.txt</div>
+          <div class="file-meta">Text Document</div>
+        </div>
+        <a
+          href="/india-skills-download/ApiDocPart.txt"
+          download="ApiDocPart.txt"
+          class="btn-download"
+          aria-label="Download ApiDocPart.txt"
+        >
+          ⬇️ Download
+        </a>
       </div>
-    </div>
 
-    <!--
-      Download button
-      ─────────────────────────────────────────────────────────────
-      href  → path to the file inside the india-skills-download folder
-              (static file served directly by Netlify / Vercel)
-      download → tells the browser to download the file, not open it.
-                 The value sets the suggested filename the user sees.
-      ─────────────────────────────────────────────────────────────
-    -->
-    <a
-      href="/india-skills-download/sample.zip"
-      download="sample.zip"
-      class="btn-download"
-      aria-label="Download sample.zip"
-    >
-      ⬇️ &nbsp;Download
-    </a>
+      <!-- File 2: WinformsPart.txt -->
+      <div class="file-row">
+        <span class="file-icon" aria-hidden="true">📄</span>
+        <div class="file-details">
+          <div class="file-name">WinformsPart.txt</div>
+          <div class="file-meta">Text Document</div>
+        </div>
+        <a
+          href="/india-skills-download/WinformsPart.txt"
+          download="WinformsPart.txt"
+          class="btn-download"
+          aria-label="Download WinformsPart.txt"
+        >
+          ⬇️ Download
+        </a>
+      </div>
+
+    </div>
+    <!-- end .file-list -->
 
     <!-- Link back to the main portfolio page -->
     <p class="back-link">
