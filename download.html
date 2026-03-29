@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic meta tags for browser compatibility and responsiveness -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download - Vishal Bhutekar</title>
+
+  <!-- Google Fonts for clean modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Dark background as specified (#0f172a) */
+    body {
+      min-height: 100vh;
+      background-color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      color: #e2e8f0;
+      padding: 1rem;
+    }
+
+    /* ===== Card Container ===== */
+    /* Centered card-style box with subtle border and shadow */
+    .card {
+      background-color: #1e293b;   /* slightly lighter dark for contrast */
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Icon area at the top of the card */
+    .icon-wrapper {
+      width: 64px;
+      height: 64px;
+      background-color: #0f172a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.75rem;
+    }
+
+    /* Main heading */
+    .card h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Sub-heading / description */
+    .card p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+    }
+
+    /* ===== File Info Box ===== */
+    /* Shows the file name in a highlighted box */
+    .file-info {
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      text-align: left;
+    }
+
+    /* File icon */
+    .file-info .file-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    /* File name text */
+    .file-info .file-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      word-break: break-all;
+    }
+
+    /* File size / type hint */
+    .file-info .file-meta {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* ===== Download Button ===== */
+    /*
+      Anchor tag styled as a button.
+      Uses the `download` attribute so the browser triggers
+      a file download instead of navigating to the file.
+      No JavaScript or backend needed — pure HTML.
+    */
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: #22c55e;   /* green as specified */
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;          /* rounded corners */
+      padding: 0.75rem 2rem;
+      width: 100%;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      cursor: pointer;
+    }
+
+    /* Hover state — slightly darker green */
+    .btn-download:hover {
+      background-color: #16a34a;
+    }
+
+    /* Active / click state — tiny scale-down for tactile feel */
+    .btn-download:active {
+      transform: scale(0.97);
+    }
+
+    /* ===== Back Link ===== */
+    .back-link {
+      margin-top: 1.25rem;
+      font-size: 0.875rem;
+    }
+
+    .back-link a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== Footer note ===== */
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.78rem;
+      color: #475569;
+    }
+
+    /* ===== Mobile Responsiveness ===== */
+    /* Already handled by max-width + padding on .card,
+       but add an extra tweak for very small screens */
+    @media (max-width: 400px) {
+      .card {
+        padding: 2rem 1.25rem;
+      }
+
+      .card h1 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Main Download Card ===== -->
+  <div class="card">
+
+    <!-- Archive / zip icon at the top -->
+    <div class="icon-wrapper" aria-hidden="true">📦</div>
+
+    <!-- Page title -->
+    <h1>India Skills Download</h1>
+
+    <!-- Brief description -->
+    <p>Click the button below to download the file associated with the India Skills competition.</p>
+
+    <!-- File info box — shows the file name clearly -->
+    <div class="file-info">
+      <span class="file-icon" aria-hidden="true">🗜️</span>
+      <div>
+        <!-- File name displayed to the user -->
+        <div class="file-name">sample.zip</div>
+        <div class="file-meta">ZIP Archive</div>
+      </div>
+    </div>
+
+    <!--
+      Download button
+      ─────────────────────────────────────────────────────────────
+      href  → path to the file inside the india-skills-download folder
+              (static file served directly by Netlify / Vercel)
+      download → tells the browser to download the file, not open it.
+                 The value sets the suggested filename the user sees.
+      ─────────────────────────────────────────────────────────────
+    -->
+    <a
+      href="/india-skills-download/sample.zip"
+      download="sample.zip"
+      class="btn-download"
+      aria-label="Download sample.zip"
+    >
+      ⬇️ &nbsp;Download
+    </a>
+
+    <!-- Link back to the main portfolio page -->
+    <p class="back-link">
+      <a href="/">← Back to Portfolio</a>
+    </p>
+
+  </div>
+
+  <!-- Footer note -->
+  <p class="footer-note">
+    Hosted on Netlify &nbsp;|&nbsp; Vishal Bhutekar
+  </p>
+
+</body>
+</html>
