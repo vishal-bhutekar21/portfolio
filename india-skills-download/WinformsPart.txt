@@ -1,0 +1,1009 @@
+combobox
+groupbox
+numericupdown
+radiobutton
+textbox
+datetimepicker
+checkbox
+picturebox 
+datagridview
+tabcontrol
+messagebox
+openfiledailog
+
+
+dataGridView1.AllowUserToAddRows = false;
+
+
+******************************************************************************************************
+
+
+DateTime dt = dateOnly.ToDateTime(TimeOnly.MinValue);
+DateOnly d = DateOnly.FromDateTime(DateTime.Now);
+int days = (date2 - date1).Days;
+
+
+******************************************************************************************************
+DataGridview
+
+
+dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+dataGridView1.MultiSelect = false;
+dataGridView1.ReadOnly = true;
+dataGridView1.AllowUserToAddRows = false;
+
+
+dataGridView1.ScrollBars = ScrollBars.Both; 
+
+
+int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value); 
+
+
+dataGridView1.DataSource = _context.Wells.ToList(); 
+
+
+dataGridView1.DataSource = _context.Wells.ToList();
+
+
+dataGridView1.DataSource = _context.Wells
+    .Select(w => new
+    {
+        w.Id,
+        w.WellName,
+        w.Capacity
+    })
+    .ToList();
+
+
+dataGridView1.Columns["WellName"].HeaderText = "Well Name";
+dataGridView1.Columns["Capacity"].HeaderText = "Capacity (Litres)";
+
+
+dataGridView1.Columns[0].HeaderTextA. FROM DESIGNER (GUI)
+
+
+
+******************************************************************************************************
+
+Steps:
+
+
+addlinkbuttoninwinfroms 
+
+
+Click DataGridView
+→ “Edit Columns”
+→ Add
+Choose:
+DataGridViewButtonColumn
+OR DataGridViewLinkColumn
+
+Set:
+
+Text = Edit
+UseColumnTextForButtonValue = true
+Name = EditBtn  = "ID";
+
+
+
+DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+btn.Name = "Edit";
+btn.HeaderText = "Action";
+btn.Text = "Edit";
+btn.UseColumnTextForButtonValue = true;
+
+dataGridView1.Columns.Add(btn); 
+
+
+
+
+******************************************************************************************************
+
+
+
+
+private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+{
+    if (e.ColumnIndex == dataGridView1.Columns["Edit"].Index && e.RowIndex >= 0)
+    {
+        int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value);
+
+        MessageBox.Show("Edit ID: " + id);
+    }
+}
+
+
+
+
+******************************************************************************************************
+
+
+dataGridView1.RowsDefaultCellStyle.BackColor = Color.LightGray;
+
+
+foreach (DataGridViewRow row in dataGridView1.Rows)
+{
+    int capacity = Convert.ToInt32(row.Cells["Capacity"].Value);
+
+    if (capacity < 500)
+    {
+        row.DefaultCellStyle.BackColor = Color.Red;
+        row.DefaultCellStyle.ForeColor = Color.White;
+    }
+}
+
+
+
+
+
+foreach (DataGridViewRow row in dataGridView1.Rows)
+{
+    string status = row.Cells["Status"].Value.ToString();
+
+    if (status == "Pending")
+        row.DefaultCellStyle.BackColor = Color.Orange;
+
+    else if (status == "Completed")
+        row.DefaultCellStyle.BackColor = Color.Green;
+
+    else if (status == "Cancelled")
+        row.DefaultCellStyle.BackColor = Color.Gray;
+}
+
+
+
+******************************************************************************************************
+
+
+
+
+
+private void LoadData()
+{
+    dataGridView1.DataSource = _context.Wells
+        .Select(w => new
+        {
+            w.Id,
+            w.WellName,
+            w.Capacity
+        })
+        .ToList();
+
+    // Change headers
+    dataGridView1.Columns["WellName"].HeaderText = "Well Name";
+
+    // Add button (only once)
+    if (!dataGridView1.Columns.Contains("Edit"))
+    {
+        DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+        btn.Name = "Edit";
+        btn.Text = "Edit";
+        btn.UseColumnTextForButtonValue = true;
+        dataGridView1.Columns.Add(btn);
+    }
+
+    // Apply color
+    foreach (DataGridViewRow row in dataGridView1.Rows)
+    {
+        int cap = Convert.ToInt32(row.Cells["Capacity"].Value);
+
+        if (cap < 500)
+            row.DefaultCellStyle.BackColor = Color.Red;
+    }
+}
+
+
+
+******************************************************************************************************
+
+Confirm box 
+
+private void btnExit_Click(object sender, EventArgs e)
+{
+    DialogResult result = MessageBox.Show(
+        "Are you sure you want to exit?",
+        "Confirm Exit",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question
+    );
+
+    if (result == DialogResult.Yes)
+    {
+        this.Close();
+    }
+}
+
+
+
+Picturebox 
+
+pictureBox1.Image = Image.FromFile("logo.png");
+pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage; 
+
+
+******************************************************************************************************
+
+
+
+Color primary = Color.FromArgb(33, 150, 243);   // Blue
+Color secondary = Color.FromArgb(30, 30, 30);   // Dark
+Color textColor = Color.White; 
+
+
+this.BackColor = secondary;
+this.ForeColor = textColor;
+
+
+btnSave.BackColor = primary;
+btnSave.ForeColor = Color.White;
+
+btnDelete.BackColor = Color.Red;
+btnDelete.ForeColor = Color.White;
+
+
+btnCancel.ForeColor = Color.Red;
+
+******************************************************************************************************
+
+
+
+Gobal ui styles: 
+
+
+	Step 1: Create a Theme Helper Class
+using System.Drawing;
+using System.Windows.Forms;
+
+public static class ThemeHelper
+{
+    public static Color PrimaryColor = Color.FromArgb(33, 150, 243); // Blue
+    public static Color SecondaryColor = Color.FromArgb(30, 30, 30); // Dark
+    public static Color TextColor = Color.White;
+
+    public static void ApplyTheme(Form form)
+    {
+        form.BackColor = SecondaryColor;
+
+        foreach (Control ctrl in form.Controls)
+        {
+            ApplyControlTheme(ctrl);
+        }
+    }
+
+    private static void ApplyControlTheme(Control ctrl)
+    {
+        if (ctrl is Button btn)
+        {
+            btn.BackColor = PrimaryColor;
+            btn.ForeColor = TextColor;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+        }
+
+        if (ctrl is Label lbl)
+        {
+            lbl.ForeColor = TextColor;
+        }
+
+        if (ctrl is Panel panel)
+        {
+            panel.BackColor = SecondaryColor;
+        }
+
+        // Recursive for nested controls
+        foreach (Control child in ctrl.Controls)
+        {
+            ApplyControlTheme(child);
+        }
+    }
+}
+
+to apply global theme in forms 
+
+
+private void Form_Load(object sender, EventArgs e)
+{
+    ThemeHelper.ApplyTheme(this);
+}
+
+
+
+
+
+COMPANY LOGO ON ALL FORMS 
+
+
+Step 1: Add Logo
+Go to Project → Resources
+Add image → name: logo
+
+using System.Windows.Forms;
+using System.Drawing;
+
+public class BaseForm : Form
+{
+    public BaseForm()
+    {
+        this.Load += BaseForm_Load;
+    }
+
+    private void BaseForm_Load(object sender, System.EventArgs e)
+    {
+        ThemeHelper.ApplyTheme(this);
+        AddLogo();
+    }
+
+    private void AddLogo()
+    {
+        PictureBox logo = new PictureBox();
+        logo.Image = Properties.Resources.logo;
+        logo.SizeMode = PictureBoxSizeMode.StretchImage;
+        logo.Width = 120;
+        logo.Height = 50;
+        logo.Top = 10;
+        logo.Left = 10;
+
+        this.Controls.Add(logo);
+    }
+}
+
+
+
+
+
+private void btnExit_Click(object sender, EventArgs e)
+{
+    DialogResult result = MessageBox.Show(
+        "Are you sure you want to exit?",
+        "Confirm Exit",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Warning
+    );
+
+    if (result == DialogResult.Yes)
+    {
+        Application.Exit();
+    }
+}
+
+
+
+
+
+
+//
+private void EmployeeListForm_Load(object sender, EventArgs e)
+{
+    LoadData();
+}
+
+
+private void LoadData()
+{
+    using (var db = new MasterContext())
+    {
+        dataGridView1.DataSource = db.Employees.ToList();
+    }
+}
+
+//
+
+private void btnAdd_Click(object sender, EventArgs e)
+{
+    AddEditEmployeeForm form = new AddEditEmployeeForm();
+
+    // 🔥 Show as dialog (important)
+    if (form.ShowDialog() == DialogResult.OK)
+    {
+        LoadData(); // 🔥 refresh grid
+    }
+}
+
+
+
+//save data
+
+private void btnSave_Click(object sender, EventArgs e)
+{
+    using (var db = new MasterContext())
+    {
+        var emp = new Employee();
+
+        emp.Name = txtName.Text;
+        emp.Email = txtEmail.Text;
+
+        db.Employees.Add(emp);
+        db.SaveChanges();
+    }
+
+    // 🔥 tell parent form: success
+    this.DialogResult = DialogResult.OK;
+
+    this.Close();
+}
+
+//add new button in datagridview
+
+
+private void LoadData()
+{
+    using (var db = new MasterContext())
+    {
+        dataGridView1.DataSource = db.Employees.ToList();
+    }
+
+    // 🔥 Prevent duplicate columns
+    if (!dataGridView1.Columns.Contains("Edit"))
+    {
+        DataGridViewButtonColumn editBtn = new DataGridViewButtonColumn();
+        editBtn.Name = "Edit";
+        editBtn.HeaderText = "Edit";
+        editBtn.Text = "Edit";
+        editBtn.UseColumnTextForButtonValue = true;
+        dataGridView1.Columns.Add(editBtn);
+    }
+
+    if (!dataGridView1.Columns.Contains("Delete"))
+    {
+        DataGridViewButtonColumn deleteBtn = new DataGridViewButtonColumn();
+        deleteBtn.Name = "Delete";
+        deleteBtn.HeaderText = "Delete";
+        deleteBtn.Text = "Delete";
+        deleteBtn.UseColumnTextForButtonValue = true;
+        dataGridView1.Columns.Add(deleteBtn);
+    }
+} 
+
+
+
+//handle on delte evenets 
+
+
+private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+{
+    if (e.RowIndex < 0) return;
+
+    // Get ID from selected row
+    int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value);
+
+    // 🔥 EDIT BUTTON
+    if (dataGridView1.Columns[e.ColumnIndex].Name == "Edit")
+    {
+        AddEditEmployeeForm form = new AddEditEmployeeForm(id);
+
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            LoadData();
+        }
+    }
+
+    // 🔥 DELETE BUTTON
+    if (dataGridView1.Columns[e.ColumnIndex].Name == "Delete")
+    {
+        DialogResult result = MessageBox.Show(
+            "Are you sure to delete?",
+            "Confirm",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Warning
+        );
+
+        if (result == DialogResult.Yes)
+        {
+            using (var db = new MasterContext())
+            {
+                var emp = db.Employees.Find(id);
+                if (emp != null)
+                {
+                    db.Employees.Remove(emp);
+                    db.SaveChanges();
+                }
+            }
+
+            LoadData();
+        }
+    }
+}
+
+
+//Search button and search button 
+
+private void txtSearch_TextChanged(object sender, EventArgs e)
+{
+    string keyword = txtSearch.Text.ToLower();
+
+    using (var db = new MasterContext())
+    {
+        var result = db.Employees
+            .Where(e => e.Name.ToLower().Contains(keyword) ||
+                        e.Email.ToLower().Contains(keyword))
+            .ToList();
+
+        dataGridView1.DataSource = result;
+    }
+}
+
+
+
+STEP 1: DATABASE (ALREADY DONE)
+
+You said:
+✔ Scaffold DB
+✔ Installed Entity Framework
+
+Good.
+
+🌐 STEP 2: API (VB.NET or C# – same concept)
+✅ Endpoint
+GET /api/busbookings
+✅ Controller Example
+[HttpGet]
+public IActionResult GetAllBookings()
+{
+    var data = _context.BusBookings.ToList();
+    return Ok(data);
+}
+
+👉 That’s it. Don’t overcomplicate.
+
+▶️ STEP 3: RUN API
+
+Example URL:
+
+https://localhost:5001/api/busbookings
+
+👉 Test in browser/Postman first
+
+🧱 STEP 4: WINFORMS (MAIN PART)
+✅ UI
+DataGridView → dataGridView1
+Button (optional) → btnLoad
+📡 STEP 5: FETCH DATA FROM API (C#)
+✅ Create Model
+public class BusBooking
+{
+    public int Id { get; set; }
+    public string PassengerName { get; set; }
+    public string BusNo { get; set; }
+    public DateTime TravelDate { get; set; }
+}
+✅ Load Method
+
+
+
+using System.Net.Http;
+using System.Text.Json;
+
+private async Task LoadBookings()
+{
+    using (HttpClient client = new HttpClient())
+    {
+        string url = "https://localhost:5001/api/busbookings";
+
+        var response = await client.GetAsync(url);
+
+        if (response.IsSuccessStatusCode)
+        {
+            string json = await response.Content.ReadAsStringAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var data = JsonSerializer.Deserialize<List<BusBooking>>(json, options);
+
+            dataGridView1.DataSource = data;
+        }
+        else
+        {
+            MessageBox.Show("Failed to load data");
+        }
+    }
+}
+
+///
+private async void Form1_Load(object sender, EventArgs e)
+{
+    await LoadBookings();
+
+    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+    dataGridView1.AllowUserToAddRows = false;
+}
+
+
+
+
+// To show the datawith from the sql server
+
+
+1.in app config add connection string
+
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace YourProject
+{
+    public partial class BusBookingForm : Form
+    {
+        int selectedId = 0;
+
+        public BusBookingForm()
+        {
+            InitializeComponent();
+        }
+
+        // 🔹 FORM LOAD
+        private void BusBookingForm_Load(object sender, EventArgs e)
+        {
+            LoadData();
+
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AllowUserToAddRows = false;
+        }
+
+        // 🔹 LOAD DATA
+        private void LoadData()
+        {
+            using (var db = new BusDbContext())
+            {
+                dataGridView1.DataSource = db.BusBookings.ToList();
+            }
+        }
+
+        // 🔹 ADD
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using (var db = new BusDbContext())
+            {
+                var booking = new BusBooking
+                {
+                    PassengerName = txtName.Text,
+                    BusNo = txtBusNo.Text,
+                    TravelDate = dtpDate.Value
+                };
+
+                db.BusBookings.Add(booking);
+                db.SaveChanges();
+            }
+
+            LoadData();
+            ClearFields();
+        }
+
+        // 🔹 SELECT ROW
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dataGridView1.Rows[e.RowIndex];
+
+            selectedId = Convert.ToInt32(row.Cells["Id"].Value);
+
+            txtName.Text = row.Cells["PassengerName"].Value.ToString();
+            txtBusNo.Text = row.Cells["BusNo"].Value.ToString();
+            dtpDate.Value = Convert.ToDateTime(row.Cells["TravelDate"].Value);
+        }
+
+        // 🔹 UPDATE
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            using (var db = new BusDbContext())
+            {
+                var booking = db.BusBookings.Find(selectedId);
+
+                if (booking != null)
+                {
+                    booking.PassengerName = txtName.Text;
+                    booking.BusNo = txtBusNo.Text;
+                    booking.TravelDate = dtpDate.Value;
+
+                    db.SaveChanges();
+                }
+            }
+
+            LoadData();
+            ClearFields();
+        }
+
+        // 🔹 DELETE
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Delete this record?",
+                "Confirm",
+                MessageBoxButtons.YesNo
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                using (var db = new BusDbContext())
+                {
+                    var booking = db.BusBookings.Find(selectedId);
+
+                    if (booking != null)
+                    {
+                        db.BusBookings.Remove(booking);
+                        db.SaveChanges();
+                    }
+                }
+
+                LoadData();
+                ClearFields();
+            }
+        }
+
+        // 🔹 SEARCH
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            using (var db = new BusDbContext())
+            {
+                string keyword = txtSearch.Text.ToLower();
+
+                var data = db.BusBookings
+                    .Where(x => x.PassengerName.ToLower().Contains(keyword)
+                             || x.BusNo.ToLower().Contains(keyword))
+                    .ToList();
+
+                dataGridView1.DataSource = data;
+            }
+        }
+
+        // 🔹 CLEAR INPUTS
+        private void ClearFields()
+        {
+            txtName.Clear();
+            txtBusNo.Clear();
+            dtpDate.Value = DateTime.Now;
+            selectedId = 0;
+        }
+    }
+}
+
+//Complete code to do in backend to work as bus system 
+
+
+
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace YourProject
+{
+    public partial class BusBookingForm : Form
+    {
+        int selectedId = 0;
+
+        public BusBookingForm()
+        {
+            InitializeComponent();
+        }
+
+        // 🔹 FORM LOAD
+        private void BusBookingForm_Load(object sender, EventArgs e)
+        {
+            LoadData();
+
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AllowUserToAddRows = false;
+        }
+
+        // 🔹 LOAD DATA + ADD BUTTON COLUMNS
+        private void LoadData()
+        {
+            using (var db = new BusDbContext())
+            {
+                dataGridView1.DataSource = db.BusBookings.ToList();
+            }
+
+            // 🔥 Add Edit Button
+            if (!dataGridView1.Columns.Contains("Edit"))
+            {
+                DataGridViewButtonColumn editBtn = new DataGridViewButtonColumn();
+                editBtn.Name = "Edit";
+                editBtn.HeaderText = "Edit";
+                editBtn.Text = "Edit";
+                editBtn.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(editBtn);
+            }
+
+            // 🔥 Add Delete Button
+            if (!dataGridView1.Columns.Contains("Delete"))
+            {
+                DataGridViewButtonColumn deleteBtn = new DataGridViewButtonColumn();
+                deleteBtn.Name = "Delete";
+                deleteBtn.HeaderText = "Delete";
+                deleteBtn.Text = "Delete";
+                deleteBtn.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(deleteBtn);
+            }
+        }
+
+        // 🔹 ADD
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using (var db = new BusDbContext())
+            {
+                var booking = new BusBooking
+                {
+                    PassengerName = txtName.Text,
+                    BusNo = txtBusNo.Text,
+                    TravelDate = dtpDate.Value
+                };
+
+                db.BusBookings.Add(booking);
+                db.SaveChanges();
+            }
+
+            LoadData();
+            ClearFields();
+        }
+
+        // 🔹 GRID BUTTON CLICK
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value);
+
+            // 🔥 EDIT
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Edit")
+            {
+                using (var db = new BusDbContext())
+                {
+                    var booking = db.BusBookings.Find(id);
+
+                    if (booking != null)
+                    {
+                        txtName.Text = booking.PassengerName;
+                        txtBusNo.Text = booking.BusNo;
+                        dtpDate.Value = booking.TravelDate;
+
+                        selectedId = id;
+                    }
+                }
+            }
+
+            // 🔥 DELETE
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Delete")
+            {
+                DialogResult result = MessageBox.Show(
+                    "Delete this record?",
+                    "Confirm",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    using (var db = new BusDbContext())
+                    {
+                        var booking = db.BusBookings.Find(id);
+
+                        if (booking != null)
+                        {
+                            db.BusBookings.Remove(booking);
+                            db.SaveChanges();
+                        }
+                    }
+
+                    LoadData();
+                }
+            }
+        }
+
+        // 🔹 UPDATE (after clicking Edit)
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            using (var db = new BusDbContext())
+            {
+                var booking = db.BusBookings.Find(selectedId);
+
+                if (booking != null)
+                {
+                    booking.PassengerName = txtName.Text;
+                    booking.BusNo = txtBusNo.Text;
+                    booking.TravelDate = dtpDate.Value;
+
+                    db.SaveChanges();
+                }
+            }
+
+            LoadData();
+            ClearFields();
+        }
+
+        // 🔹 SEARCH
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            using (var db = new BusDbContext())
+            {
+                string keyword = txtSearch.Text.ToLower();
+
+                var data = db.BusBookings
+                    .Where(x => x.PassengerName.ToLower().Contains(keyword)
+                             || x.BusNo.ToLower().Contains(keyword))
+                    .ToList();
+
+                dataGridView1.DataSource = data;
+            }
+        }
+
+        // 🔹 CLEAR
+        private void ClearFields()
+        {
+            txtName.Clear();
+            txtBusNo.Clear();
+            dtpDate.Value = DateTime.Now;
+            selectedId = 0;
+        }
+    }
+}
+
+
+dataGridView1.Columns["PassengerName"].HeaderText = "Passenger";
+dataGridView1.Columns["BusNo"].HeaderText = "Bus Number";
+
+
+
+in 5 sec pooloing part 
+
+private async void MainForm_Load(object sender, EventArgs e)
+{
+    await StartPolling();
+}
+
+
+
+
+
+using System.Net.Http;
+using System.Text.Json;
+
+private async Task StartPolling()
+{
+    using (HttpClient client = new HttpClient())
+    {
+        while (true) // 🔁 infinite loop
+        {
+            try
+            {
+                string url = "https://localhost:5001/api/busbookings";
+
+                var response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+
+                    var data = JsonSerializer.Deserialize<List<BusBooking>>(json, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                    dataGridView1.DataSource = data;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); // don't spam UI
+            }
+
+            // ⏳ wait 5 seconds before next call
+            await Task.Delay(5000);
+        }
+    }
+}
+
+
+
+ 
+
+
+
+
+
+
+
+

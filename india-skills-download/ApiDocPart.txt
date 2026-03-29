@@ -1,0 +1,672 @@
+1.SQL Server Express
+2.SQL Server Management Studio 
+3.Draw.io 
+4.Postman
+5. 
+
+
+
+
+
+1 Retrieve Assigned Delivery
+
+GET /couriers/{courierId}/deliveries
+
+Example Request
+
+GET https://api.vishal.store.com/api/v1/couriers/102/deliveries
+
+Example Response
+
+
+{
+  "courierId": "02",
+  "deliveries": [
+    {
+      "shipmentId": "1001",
+      "customerName": "vishal bhutekar",
+      "deliveryAddress": "Aurangabad, Maharashtra",
+      "priority": "low",
+      "status": "Out for Delivery"
+    },
+    {
+      "shipmentId": "1002",
+      "customerName": "vishal deshmukh",
+      "deliveryAddress": "Pune, Maharashtra",
+      "priority": "Medium",
+      "status": "Pending"
+    }
+  ]
+}
+
+
+ Error Codes
+                    
+
+400   Invalid request parameters        
+401   Unauthorized request 
+404   Courier not found      
+
+              
+--------------------------------------------------------------------------------------------------------------------------
+
+2 Update Delivery Status
+
+Endpoint
+
+
+PUT /deliveries/{shipmentId}/status
+
+
+Headers
+
+
+ Request Body
+
+
+{
+  "status": "Delivered",
+  "location": "Aurangabad Warehouse",
+  "timestamp": "2026-03-17T14:30:00"
+}
+
+ Response
+{
+  "message": "Delivery status updated successfully",
+  "shipmentId": "1001",
+  "updatedStatus": "Delivered"
+}
+
+
+Error Codes
+
+
+400   Invalid request data
+401   Unauthorized access 
+404   Shipment not found   
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3 Log Delivery Exception
+
+Endpoint
+
+
+POST /deliveries/{shipmentId}/exceptions
+
+ Headers
+
+
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+
+ Request Body
+
+{
+  "reason": "Customer Not Home",
+  "photoUrl": "https://storage.vishal.com/exceptions/photo123.jpg",
+  "remarks": "Customer requested delivery tomorrow"
+}
+
+
+ Response
+
+{
+  "message": "Delivery exception logged successfully",
+  "shipmentId": "1001"
+}
+
+ Error Codes
+
+ 400   Invalid exception data 
+ 401   Unauthorized request   
+ 404   Shipment not found   
+
+
+
+
+
+===============================
+BUS BOOKING API DOCUMENTATION
+===============================
+
+BASE URL:
+http://localhost:5000/api
+
+--------------------------------
+1. REGISTER USER
+--------------------------------
+POST /api/register
+
+Request:
+{
+  "name": "Vishal",
+  "email": "vishal@gmail.com",
+  "password": "123456"
+}
+
+Response:
+Status: 201 Created
+{
+  "message": "User registered successfully"
+}
+
+Error:
+Status: 400 Bad Request
+{
+  "error": "Email already exists"
+}
+
+--------------------------------
+2. LOGIN USER
+--------------------------------
+POST /api/login
+
+Request:
+{
+  "email": "vishal@gmail.com",
+  "password": "123456"
+}
+
+Response:
+Status: 200 OK
+{
+  "token": "jwt_token",
+  "userId": 1
+}
+
+Error:
+Status: 401 Unauthorized
+{
+  "error": "Invalid credentials"
+}
+
+--------------------------------
+3. GET ALL BUSES
+--------------------------------
+GET /api/buses
+
+Response:
+Status: 200 OK
+[
+  {
+    "id": 1,
+    "busName": "Shiv Travels",
+    "source": "Pune",
+    "destination": "Mumbai",
+    "price": 500
+  }
+]
+
+--------------------------------
+4. SEARCH BUSES
+--------------------------------
+GET /api/buses/search?source=Pune&destination=Mumbai
+
+Response:
+Status: 200 OK
+[
+  {
+    "id": 2,
+    "busName": "Orange Travels",
+    "price": 600
+  }
+]
+
+Error:
+Status: 404 Not Found
+{
+  "error": "No buses found"
+}
+
+--------------------------------
+5. BOOK TICKET
+--------------------------------
+POST /api/bookings
+
+Request:
+{
+  "userId": 1,
+  "busId": 2,
+  "seatNumber": 12
+}
+
+Response:
+Status: 201 Created
+{
+  "bookingId": 101,
+  "status": "Confirmed"
+}
+
+Error:
+Status: 409 Conflict
+{
+  "error": "Seat already booked"
+}
+
+--------------------------------
+6. GET USER BOOKINGS
+--------------------------------
+GET /api/bookings/user/1
+
+Response:
+Status: 200 OK
+[
+  {
+    "bookingId": 101,
+    "busName": "Orange Travels",
+    "seatNumber": 12
+  }
+]
+
+--------------------------------
+7. CANCEL BOOKING
+--------------------------------
+DELETE /api/bookings/101
+
+Response:
+Status: 200 OK
+{
+  "message": "Booking cancelled"
+}
+
+Error:
+Status: 404 Not Found
+{
+  "error": "Booking not found"
+}
+
+--------------------------------
+8. GET AVAILABLE SEATS
+--------------------------------
+GET /api/seats?busId=2
+
+Response:
+Status: 200 OK
+{
+  "availableSeats": [1,2,3,5,6]
+}
+
+--------------------------------
+COMMON STATUS CODES
+--------------------------------
+200 OK
+201 Created
+400 Bad Request
+401 Unauthorized
+404 Not Found
+409 Conflict
+500 Internal Server Error
+
+
+
+API IN VISUAL STUDIO
+
+******************************************************************************************************
+Program.cs
+
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Session32019Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+******************************************************************************************************
+Appsetting.json
+
+
+ "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=Session3_2019;Trusted_Connection=True;TrustServerCertificate=True;"
+  },
+******************************************************************************************************
+
+in android manifest 
+ android:usesCleartextTraffic="true"
+
+******************************************************************************************************
+
+
+Dependency in android studio 
+
+implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+******************************************************************************************************
+
+in the android cmd with also first start the database
+
+Adb reverse tcp:5000 tcp:5000
+
+applicationlaunch.json
+
+  "applicationUrl": "https://localhost:50001;http://localhost:5001",
+
+
+
+******************************************************************************************************
+
+
+
+To install all the packages in the visual studio code 
+entity and swagger 
+
+Install-Package Microsoft.EntityFrameworkCore
+
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+
+Install-Package Microsoft.EntityFrameworkCore.Tools
+Install-Package Swashbuckle.AspNetCore
+
+
+
+******************************************************************************************************
+
+
+
+Swagger 
+builder.Services.AddSwaggerGen();
+
+	app.UseSwagger();
+             app.UseSwaggerUI();
+
+ ******************************************************************************************************
+
+
+
+SELECT name 
+FROM sys.tables;
+
+
+Scaffold-DBcontext “server=localhost\SQLEXPRESS; Database=Session4; TrustServerCertificate=True;  Trusted_Connection=True; “ Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+
+
+
+******************************************************************************************************
+
+
+
+
+
+Controller Code in visual studio 
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+[Route("api/[controller]")]
+[ApiController]
+public class BusController : ControllerBase
+{
+    private readonly AppDbContext _context;
+
+    public BusController(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    // ✅ 1. GET ALL BUSES
+    [HttpGet]
+    public async Task<IActionResult> GetAllBuses()
+    {
+        var buses = await _context.Buses.ToListAsync();
+        return Ok(buses);
+    }
+
+    // ✅ 2. GET BUS BY ID
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBusById(int id)
+    {
+        var bus = await _context.Buses.FindAsync(id);
+
+        if (bus == null)
+            return NotFound("Bus not found");
+
+        return Ok(bus);
+    }
+
+    // ✅ 3. CREATE NEW BUS
+    [HttpPost]
+    public async Task<IActionResult> CreateBus([FromBody] Bus bus)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        _context.Buses.Add(bus);
+        await _context.SaveChangesAsync();
+
+        return Ok(bus);
+    }
+
+    // ✅ 4. UPDATE BUS
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateBus(int id, Bus updatedBus)
+    {
+        if (id != updatedBus.Id)
+            return BadRequest("ID mismatch");
+
+        var bus = await _context.Buses.FindAsync(id);
+
+        if (bus == null)
+            return NotFound("Bus not found");
+
+        bus.BusNumber = updatedBus.BusNumber;
+        bus.BusType = updatedBus.BusType;
+        bus.Capacity = updatedBus.Capacity;
+        bus.Source = updatedBus.Source;
+        bus.Destination = updatedBus.Destination;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(bus);
+    }
+
+    // ✅ 5. DELETE BUS
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBus(int id)
+    {
+        var bus = await _context.Buses.FindAsync(id);
+
+        if (bus == null)
+            return NotFound("Bus not found");
+
+        _context.Buses.Remove(bus);
+        await _context.SaveChangesAsync();
+
+        return Ok("Bus deleted successfully");
+    }
+
+    // ✅ 6. SEARCH BUSES (Custom API)
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchBus(string source, string destination)
+    {
+        var buses = await _context.Buses
+            .Where(b => b.Source == source && b.Destination == destination)
+            .ToListAsync();
+
+        return Ok(buses);
+    }
+}
+
+******************************************************************************************************
+booking status check  
+
+[HttpGet("status/{bookingId}")]
+public async Task<IActionResult> GetBookingStatus(int bookingId)
+{
+    var booking = await _context.Bookings
+        .Where(b => b.Id == bookingId)
+        .Select(b => new 
+        {
+            b.Id,
+            b.UserId,
+            b.BusId,
+            b.SeatNumber,
+            b.Status,        // Confirmed / Pending / Cancelled
+            b.BookingDate
+        })
+        .FirstOrDefaultAsync();
+
+    if (booking == null)
+        return NotFound(new { message = "Booking not found" });
+
+    return Ok(new 
+    {
+        message = "Booking status fetched successfully",
+        data = booking
+    });
+}
+
+******************************************************************************************************
+to check and get the use details and join operation 
+
+
+[HttpGet("details/{id}")]
+public async Task<IActionResult> GetBookingDetails(int id)
+{
+    var data = await _context.Bookings
+        .Where(b => b.Id == id)
+        .Select(b => new
+        {
+            b.Id,
+            UserName = b.User.Name,
+            BusName = b.Bus.BusName,
+            b.SeatNumber,
+            b.Status
+        })
+        .FirstOrDefaultAsync();
+
+    return Ok(data);
+}
+
+******************************************************************************************************
+
+[HttpGet("search")]
+public async Task<IActionResult> Search(string source, string destination)
+{
+    var buses = await _context.Buses
+        .Where(b => b.Source == source && b.Destination == destination)
+        .ToListAsync();
+
+    return Ok(buses);
+}  
+
+******************************************************************************************************
+
+using Microsoft.AspNetCore.Mvc;
+using YourNamespace.Models;
+using System.Linq;
+
+[Route("api/[controller]")]
+[ApiController]
+public class WellsController : ControllerBase
+{
+    private readonly Session5Context _context;
+
+    public WellsController(Session5Context context)
+    {
+        _context = context;
+    }
+
+    //--------------------------------
+    // 1. GET ALL WELLS
+    //--------------------------------
+    [HttpGet]
+    public IActionResult GetWells()
+    {
+        var wells = _context.Wells.ToList();
+        return Ok(wells);
+    }
+
+    //--------------------------------
+    // 2. GET WELL BY ID
+    //--------------------------------
+    [HttpGet("{id}")]
+    public IActionResult GetWell(int id)
+    {
+        var well = _context.Wells.FirstOrDefault(w => w.Id == id);
+
+        if (well == null)
+            return NotFound(new { error = "Well not found" });
+
+        return Ok(well);
+    }
+
+    //--------------------------------
+    // 3. INSERT WELL
+    //--------------------------------
+    [HttpPost]
+    public IActionResult AddWell([FromBody] Well well)
+    {
+        if (well == null)
+            return BadRequest(new { error = "Invalid data" });
+
+        _context.Wells.Add(well);
+        _context.SaveChanges();
+
+        return Created("", well);
+    }
+
+    //--------------------------------
+    // 4. UPDATE WELL
+    //--------------------------------
+    [HttpPut("{id}")]
+    public IActionResult UpdateWell(int id, [FromBody] Well updatedWell)
+    {
+        var well = _context.Wells.FirstOrDefault(w => w.Id == id);
+
+        if (well == null)
+            return NotFound(new { error = "Well not found" });
+
+        // Update fields
+        well.WellName = updatedWell.WellName;
+        well.WellTypeId = updatedWell.WellTypeId;
+        well.Capacity = updatedWell.Capacity;
+        well.GasOilDepth = updatedWell.GasOilDepth;
+
+        _context.SaveChanges();
+
+        return Ok(new { message = "Well updated successfully" });
+    }
+
+    //--------------------------------
+    // 5. DELETE WELL
+    //--------------------------------
+    [HttpDelete("{id}")]
+    public IActionResult DeleteWell(int id)
+    {
+        var well = _context.Wells.FirstOrDefault(w => w.Id == id);
+
+        if (well == null)
+            return NotFound(new { error = "Well not found" });
+
+        _context.Wells.Remove(well);
+        _context.SaveChanges();
+
+        return Ok(new { message = "Well deleted successfully" });
+    }
+
+    //--------------------------------
+    // 6. SEARCH / FILTER
+    //--------------------------------
+    [HttpGet("search")]
+    public IActionResult Search(string name)
+    {
+        var result = _context.Wells
+            .Where(w => w.WellName.Contains(name))
+            .ToList();
+
+        return Ok(result);
+    }
+}
+
+
+******************************************************************************************************
+
+
+
+
+
+
+
+
+
